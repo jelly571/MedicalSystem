@@ -19,6 +19,7 @@ body {
   user-select: none;
   -webkit-tab-hightlight-color: transparent;
   color: var(--color-text);
+  background-color: #fff;
   width: 100vw;
 }
 
