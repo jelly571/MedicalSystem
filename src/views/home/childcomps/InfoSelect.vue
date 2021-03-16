@@ -1,6 +1,6 @@
 <template>
   <div class="info">
-    <div class="infoitem" v-for="(item, index) in info" :key="index" :class="item.class">
+    <div class="infoitem" v-for="(item, index) in info" :key="index" :class="item.class" @click='itemClick(index)'>
       <div class="title">
         <img :src="item.imgurl" alt="" />
         <span>{{ item.title }}</span>
@@ -55,6 +55,14 @@ export default {
       ],
     };
   },
+  methods: {
+    itemClick(index) {
+      if(index == 0) {
+        this.$store.commit('indexUpdate',index)
+        this.$router.replace('/datamanage').catch(err=>err)
+      }
+    }
+  }
  
 };
 </script>
@@ -70,11 +78,11 @@ export default {
 .infoitem {
   background-color: var(--color-tint);
   opacity:0.9;
-  width: 300px;
+  width: 290px;
   height: 130px;
   border-radius: 10px;
   color: #fff;
-  margin: 0 30px 40px 30px;
+  margin: 40px 25px 0 25px;
   text-align: center;
 }
 .analysis,

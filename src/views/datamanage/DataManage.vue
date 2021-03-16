@@ -1,12 +1,16 @@
 <template>
   <div>
-    DataManage
+    <patient-info-list></patient-info-list>
   </div>
 </template>
   
 <script>
+import PatientInfoList from './childcomps/PatientInfoList'
   export default {
-    name: "DataManage"
+    name: "DataManage",
+    components: {
+      PatientInfoList,
+    }
   }
 </script>
   

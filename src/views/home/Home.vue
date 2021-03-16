@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div id='home'>
       <!-- 导航栏 -->
       <nav-bar></nav-bar>
-      <router-view />
+      <router-view class='content' />
       
       
     </div>
@@ -23,5 +23,12 @@
 </script>
     
 <style scoped>
+#home {
+  height: 100%;
+}
+.content {
+  padding-top: 50px;
     
+}
+ 
 </style>

@@ -34,7 +34,6 @@
 </template>
   
 <script>
-import axios from 'axios';
 export default {
   name: "Login",
   data() {
@@ -57,22 +56,27 @@ export default {
         this.error = "密码请输入6-20位字符";
       } else {
         this.error = "";
+
         this.getMessage();
-        this.$router.replace("/home").catch((err) => err);
+        
       }
     },
 
     getMessage() {
       const path = "http://localhost:5000/login";
-      const params = 'jelly'
-      axios.post(path, {
-        username: params
+      this.$axios.post(path, {
+        username: this.username,
+        password: this.password,
     }).then((res) => {
-          this.msg = res.data;
-          console.log(res.data);
+        if(res.data.token && res.data.token == this.username) {
+          // this.$store.commit('changeLogin',res.data.token)
+          this.$store.commit('changeLogin',{ Authorization: res.data.token })
+          this.$router.replace("/home").catch((err) => err);
+        } else {
+          alert('账号或密码错误，请重新输入')
+        }
         }).catch((error) => {
-          // eslint-disable-next-line
-          console.error(error);
+          console.log(error)
         });
     },
   },

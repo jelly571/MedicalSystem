@@ -3,10 +3,10 @@
   <div class='nav'>
     <div class='left'>
       <img src="~assets/img/home/logo.png" alt="">
-      <div @click='homeClick'>胃窥镜图像疾病分割系统</div>
+      <div class='system' @click='homeClick'>胃窥镜图像疾病分割系统</div>
     </div>
     <div class='center'>
-      <div class='title' v-for='(item,index) in title' :key='index'  :class='{active: currentIndex === index}' @click='navClick(index)'>
+      <div class='title' v-for='(item,index) in title' :key='index'  :class='{active: $store.state.homecurrentindex === index}' @click='navClick(index)'>
         {{item}}
       </div>   
     </div>
@@ -25,20 +25,18 @@
     name: "NavBar",
     data() {
       return {
-        currentIndex: -1,
         title: ['数据管理', '模型管理', '项目进度', '账号管理'],
-        url: ['/accountmanage','/datamanage','modelmanage','/statistical']
+        url: ['/datamanage','/modelmanage','/project','/accountmanage']
 
       }
     },
     methods:{
       homeClick() {
         this.$router.replace('/homeinfo').catch(err => err)
-        this.currentIndex = -1
+        this.$store.commit('indexUpdate',-1)
       },
       navClick(index) {
-        this.currentIndex = index;
-      
+        this.$store.commit('indexUpdate',index)
         this.$router.replace(this.url[index]).catch(err => err)  
       }
     }
@@ -49,10 +47,12 @@
   .nav {
     width: 100vw;
     height: 50px;
-    background-color: rgba(0, 0, 0, .6);
+    background-color: rgba(100, 100, 100);
     display: flex;
     align-items: center;
     color: #fff;
+    position: fixed;
+    top: 0;
     
   }
   .nav .left {
@@ -62,6 +62,9 @@
     justify-content: center;
     align-items: center;
 
+  }
+  .nav .left .system{
+    width: 180px;
   }
   .left img {
     width: 25px;
@@ -76,6 +79,9 @@
     font-size: 14px;
     padding: 0 50px;
 
+  }
+  .nav .center .title {
+    width: 100px;
   }
 
   .nav .center .active {

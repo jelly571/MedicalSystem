@@ -1,12 +1,14 @@
 <template>
   <div>
-    
+    AccountManage
   </div>
 </template>
   
 <script>
+
   export default {
-    name: "AccountManage"
+    name: "AccountManage",
+    
   }
 </script>
   

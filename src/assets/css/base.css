@@ -21,8 +21,11 @@ body {
   color: var(--color-text);
   background-color: #fff;
   width: 100vw;
+  height: 100%;
 }
-
+html {
+  height: 100%;
+}
 a {
   color: var(--color-text);
   text-decoration: none; /*去超连接下划线 */

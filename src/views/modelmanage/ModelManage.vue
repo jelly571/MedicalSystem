@@ -1,5 +1,7 @@
 <template>
-  <div>ModelManage</div>
+  <div>
+    ModelManage
+  </div>
 </template>
   
 <script>

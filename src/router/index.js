@@ -1,14 +1,16 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Ping from 'views/login/Ping';
 const Login = ()=> import ('views/login/Login');
 const Home = ()=> import ('views/home/Home');
 const HomeInfo = ()=> import('views/home/childcomps/HomeInfo')
 const AccountManage = ()=> import('views/accountmanage/AccountManage')
 const DataManage = ()=> import('views/datamanage/DataManage')
 const ModelManage = ()=> import('views/modelmanage/ModelManage')
-const Statistical = ()=> import('views/statistical/Statistical')
-
+const PatientData = ()=> import('views/datamanage/childcomps/PatientData')
+const PatientDataMan = ()=> import('views/datamanage/childcomps/PatientDataMan')
+const Diagnosis = ()=> import('views/diagnosis/Diagnosis')
+const PatientSystem = ()=> import('views/datamanage/childcomps/PatientSystem')
+const Project = ()=> import('views/project/Project')
 Vue.use(VueRouter);
 
 export default new VueRouter({
@@ -20,10 +22,6 @@ export default new VueRouter({
     {
       path: '/login',
       component: Login,
-    },
-    {
-      path: '/ping',
-      component: Ping,
     },
     {
       path: '/home',
@@ -42,16 +40,39 @@ export default new VueRouter({
           component: AccountManage,
         },
         {
-          path: '/datamanage',
-          component: DataManage,
-        },
-        {
           path: '/modelmanage',
           component: ModelManage,
         },
         {
-          path: '/statistical',
-          component: Statistical,
+          path: '/datamanage',
+          component: DataManage,
+        },
+        {
+          path: '/patientsystem',
+          component: PatientSystem,
+          children: [
+            {
+              path: '',
+              redirect: '/patientdata',
+            },
+            {
+              path: '/patientdataman',
+              component: PatientDataMan,
+            },
+            {
+              path: '/patientdata',
+              component: PatientData,
+            },
+            {
+              path: '/diagnosis',
+              component: Diagnosis,
+            },
+          ]
+        },
+        
+        {
+          path: '/project',
+          component: Project,
         },
       ]
     },

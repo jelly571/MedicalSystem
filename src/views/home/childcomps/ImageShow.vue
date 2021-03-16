@@ -14,9 +14,10 @@
 </script>
   
 <style scoped>
+  
   .images {
     display: flex;
-    margin: 40px 80px 50px;
+    margin: 50px 80px 10px;
   }
   .images img {
     width: 100%;
