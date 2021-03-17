@@ -2,11 +2,11 @@
     <div class='patient-bar'>
     <div class='left-bar'>
       <div class='patient-info'>
-        <div>姓名：张三</div>
-        <div>性别：男</div>
-        <div>年龄：20</div>
+        <div>姓名：{{datainfo.name}}</div>
+        <div>性别：{{datainfo.sex}}</div>
+        <div>年龄：{{datainfo.age}}</div>
         <div>疾病诊断：</div>
-        <button>胃癌早期</button>
+        <button>{{datainfo.state}}</button>
       </div>
       <div class='info-bar'>
         <div @click='infoClick' :class='{active: currentindex == 0}'>基本信息</div>
@@ -36,10 +36,22 @@
     name: "PatientBar",
     data() {
       return {
-        currentindex: 0
+        currentindex: 0,
+        datainfo: {}
       }
     },
+    created() {
+      this.getPatientDetail()
+    },
     methods: {
+      getPatientDetail() {
+      this.$axios
+        .post("http://10.102.32.67:5000/patientdata", {patientid: sessionStorage.getItem('patientid')})
+        .then((res) => { 
+          this.datainfo = res.data
+        });
+  
+    },
       infoClick() {
         this.$router.replace('/patientdata').catch(err=>err)
         this.currentindex = 0

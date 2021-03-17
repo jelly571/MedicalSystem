@@ -9,23 +9,23 @@
     <div class='info-content'>
       <div class='title'><span></span>个人信息</div>
       <div class='info'>
-        <div class='info-item'>病例编号：16000000</div>
-        <div class='info-item'>姓名：张三</div>
-        <div class='info-item'>年龄：20</div>
-        <div class='info-item'>性别：男</div>
-        <div class='info-item'>就诊卡号/医保号：2019242255</div>
-        <div class='info-item'>病人状态：在访</div>
-        <div class='info-item'>初次就诊时间：2017-09-23</div>
-        <div class='info-item'>初次就诊年龄（岁）：19</div>
-        <div class='info-item'>疾病分类：暂无癌变风</div>
+        <div class='info-item'>病例编号：{{datainfo.id}}</div>
+        <div class='info-item'>姓名：{{datainfo.name}}</div>
+        <div class='info-item'>年龄：{{datainfo.age}}</div>
+        <div class='info-item'>性别：{{datainfo.sex}}</div>
+        <div class='info-item'>就诊卡号/医保号：{{datainfo.number}}</div>
+        <div class='info-item'>病人状态：{{datainfo.state}}</div>
+        <div class='info-item'>初次就诊时间：{{datainfo.date}}</div>
+        <div class='info-item'>初次就诊年龄（岁）：{{datainfo.age}}</div>
+        <div class='info-item'>疾病分类：{{datainfo.ill}}</div>
       </div>    
       <div class='ill-info'>
-        <div>病症描述：</div>
-        <div>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</div>
+        <div style='margin: 5px 0'>病症描述：</div>
+        <div style='line-height: 2'>{{datainfo.illinfo}}</div>
       </div>
       <div class='ill-result'>
-        <div>诊疗结果：</div>
-        <div>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</div>
+        <div style='margin: 5px 0'>诊疗结果：</div>
+        <div style='line-height: 2'>{{datainfo.illresult}}</div>
       </div>
     </div>
   </div>
@@ -35,10 +35,26 @@
 import DateSelect from 'components/common/dateselect/DateSelect'
 export default {
   name: "PatientData",
+  data() {
+    return {
+      datainfo:{}
+    }
+  },
   components: {
     DateSelect
   },
+  created() {
+    this.getPatientDetail()
+  },
   methods:{
+    getPatientDetail() {
+      this.$axios
+        .post("http://10.102.32.67:5000/patientdata", {patientid: sessionStorage.getItem('patientid')})
+        .then((res) => { 
+          this.datainfo = res.data
+        });
+  
+    },
     editClick() {
       this.$router.replace('/patientdataman')
     }
@@ -93,30 +109,13 @@ export default {
     
   }
   .info-content .info-item {
-    margin-top: 8px;
+    margin-top: 10px;
     width: 240px;
-    height: 40px;
+    height: 30px;
     margin-left: 30px;
-    margin-bottom: 4px;
+    margin-bottom: 5px;
   }
-  .info-content .info-item input
-  {
-    width: 110px;
-    height: 30px;
-    border:1px solid #ddd;
-    padding: 0 3px;
-  }
-  .info-content .info-item select {
-    width: 110px;
-    height: 30px;
-    border:1px solid #ddd;
-    padding: 0 3px;
-  }
-  .info-content .info-item .radio {
-    width: 15px;
-    height: 15px;
-    vertical-align: middle;
-  }
+  
   .ill-result {
     margin-top: 20px
   }

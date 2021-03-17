@@ -54,6 +54,9 @@ axios.interceptors.request.use(
 
 Vue.config.productionTip = false
 
+//用Vue实例作为事件总线
+Vue.prototype.$bus = new Vue();
+
 Vue.use(Element)
 new Vue({
   render: h => h(App),

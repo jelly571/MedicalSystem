@@ -1,25 +1,22 @@
 <template>
     <div class='center-cont'>
       <div class='center-bar'>
+        
         <div ><span> 数据管理 / </span>智能诊疗</div>
-        <div><button>新建</button></div>
+        <div><button @click='newClcik'>新建</button></div>
       </div>
+      <component
+        v-for="(item,index) in comName"
+        :is="item.name"
+        :key="index"
+        @deletenewClick='deletenewClick(index)'></component>
 
-      <div>
+      <!-- <div>
         <date-bar><div>2019-7-20</div></date-bar>
         <diagnosis-content></diagnosis-content>
-      </div>
+      </div> -->
       <div>
-        <date-bar><div>2020-1-10</div></date-bar>
-        <diagnosis-content></diagnosis-content>
-      </div>
-      <div>
-        <date-bar><div>2021-2-3</div></date-bar>
-        <diagnosis-content></diagnosis-content>
-      </div>
-      <div>
-        <date-bar><div>2021-3-10</div></date-bar>
-        <diagnosis-content></diagnosis-content>
+        <diagnosis-history></diagnosis-history>
       </div>
       
     </div>
@@ -29,11 +26,37 @@
 <script>
 import DateBar from './childcomps/DateBar'
 import DiagnosisContent from './childcomps/DiagnosisContent'
+import DiagnosisHistory from './childcomps/DiagnosisHistory'
+import DiagnosisNew from './childcomps/DiagnosisNew'
   export default {
     name: "Diagnosis",
+    data() {
+      return {
+        comName: []
+      }
+      
+    },
     components: {
       DateBar,
       DiagnosisContent,
+      DiagnosisHistory,
+      DiagnosisNew,
+  
+    },
+
+    methods: {
+      newClcik() {
+        this.comName.splice(0,0,{
+        name: "DiagnosisNew"
+        });
+      },
+
+      deletenewClick(index) {
+        this.comName.splice(index, 1);
+      },
+      deleteClick() {
+
+      }
     }
   }
 </script>

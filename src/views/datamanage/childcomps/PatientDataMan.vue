@@ -10,11 +10,11 @@
     <div class='info-content'>
       <div class='title'><span></span>个人信息</div>
       <div class='info'>
-        <div class='info-item'>病例编号：<input type="text" placeholder="单行输入"></div>
-        <div class='info-item'>姓名：<input type="text" placeholder="单行输入"></div>
-        <div class='info-item'>年龄：<input type="text" placeholder="单行输入"></div>
-        <div class='info-item'>性别：<input class='radio' type="radio" name='sex' value='male'> 男 <input class='radio' type="radio" name='sex' value='female'> 女</div>
-        <div class='info-item'>就诊卡号/医保号：<input type="text" placeholder="单行输入"></div>
+        <div class='info-item'>病例编号：<input type="text" name='id' placeholder="单行输入"></div>
+        <div class='info-item'>姓名：<input type="text" name='name' placeholder="单行输入"></div>
+        <div class='info-item'>年龄：<input type="text" name='age' placeholder="单行输入"></div>
+        <div class='info-item'>性别：<input class='radio' name='sex' type="radio"  value='male'> 男 <input class='radio' type="radio" name='sex' value='female'> 女</div>
+        <div class='info-item'>就诊卡号/医保号：<input name='number' type="text" placeholder="单行输入"></div>
         <div class='info-item'>病人状态：
           <select name="state" id="state">
             <option value="在访">在访</option>
@@ -23,9 +23,9 @@
           </select>
         </div>
         <div class='info-item date'><date-select class='date-select' /></div>
-        <div class='info-item'>初次就诊年龄（岁）：<input type="text" placeholder="单行输入"></div>
+        <div class='info-item'>初次就诊年龄（岁）：<input name='age' type="text" placeholder="单行输入"></div>
         <div class='info-item'>疾病分类：
-          <select name="state" id="state">
+          <select name="state" id="ill">
             <option value="暂无癌变风险">暂无癌变风险</option>
             <option value="胃癌早期">胃癌早期</option>
             <option value="胃癌中期">胃癌中期</option>
@@ -107,8 +107,10 @@ export default {
   .info-content .info-item {
     width: 240px;
     height: 40px;
+    line-height: 40px;
     margin-left: 30px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    
   }
   .info-content .info-item input
   {

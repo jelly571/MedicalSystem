@@ -63,14 +63,13 @@ export default {
     },
 
     getMessage() {
-      const path = "http://localhost:5000/login";
+      const path = "http://10.102.32.67:5000/login";
       this.$axios.post(path, {
         username: this.username,
         password: this.password,
     }).then((res) => {
         if(res.data.token && res.data.token == this.username) {
-          // this.$store.commit('changeLogin',res.data.token)
-          this.$store.commit('changeLogin',{ Authorization: res.data.token })
+          this.$store.commit('changeLogin',res.data.token)
           this.$router.replace("/home").catch((err) => err);
         } else {
           alert('账号或密码错误，请重新输入')

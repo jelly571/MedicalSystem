@@ -4,13 +4,18 @@
       <div class='icon'></div>
       <slot></slot>
     </div>
-    <div><img src="~assets/img/diagnosis/delete.png" alt=""></div>
+    <div @click='deleteClick'><img src="~assets/img/diagnosis/delete.png" alt=""></div>
   </div>
 </template>
   
 <script>
   export default {
-    name: "DateBar"
+    name: "DateBar",
+    methods: {
+      deleteClick() {
+        this.$emit('deleteClick')
+      }
+    }
   }
 </script>
   
