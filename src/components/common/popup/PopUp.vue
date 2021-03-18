@@ -1,6 +1,6 @@
 <template>
   <div class="popup" v-show='isShow'>
-    <div class='text'><slot>{{message}}</slot></div>
+    <div class='text'>{{message}}</div>
     <div class='btn'><button class='yes' @click="yesClick">确定</button><button class='no' @click="noClick">取消</button></div>
   </div>
 </template>
@@ -14,12 +14,13 @@
           default() {
             return false
           } 
+        },
+        message: {
+          type: String,
+          default() {
+            return '是否删除？'
+          } 
         }
-    },
-    data(){
-      return {
-        message: '确认删除吗？',
-      }
     },
     methods:{
       yesClick() {
@@ -54,9 +55,11 @@
     padding:8px;
   }
   .text {
-    height: 100px;
-    line-height: 100px;
+    height: 80px;
+    line-height: 2;
     text-align: center;
+    word-break: break-all;
+    margin-top: 30px;
   }
   .btn button{
     width: 50px;

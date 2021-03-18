@@ -10,11 +10,15 @@
         {{item}}
       </div>   
     </div>
-    <div class='right'>
+    <div class='right' @click='userClick'>
       <img src="~assets/img/home/user.png" alt="">
       <div>用户名</div>
       <div class='down'></div>
     </div>
+  </div>
+  <div class='user' v-show='isShow'>
+    <div>个人信息</div>
+    <div class='userleft' @click='userLeft'>退出登录</div>
   </div>
 </div>
   
@@ -26,7 +30,8 @@
     data() {
       return {
         title: ['数据管理', '模型管理', '项目进度', '账号管理'],
-        url: ['/datamanage','/modelmanage','/project','/accountmanage']
+        url: ['/datamanage','/modelmanage','/project','/accountmanage'],
+        isShow: false,
 
       }
     },
@@ -38,6 +43,13 @@
       navClick(index) {
         this.$store.commit('indexUpdate',index)
         this.$router.replace(this.url[index]).catch(err => err)  
+      },
+      userClick() {
+        this.isShow = !this.isShow
+      },
+      userLeft() {
+        sessionStorage.removeItem('token') 
+        this.$router.replace('/login').catch(err=>err)
       }
     }
   }
@@ -109,5 +121,29 @@
     border-bottom: 1px solid #fff;
     transform: rotate(-45deg);
     margin-left: 8px;
+  }
+  .user{
+    width: 120px;
+    height: 80px;
+    background-color: rgba(100, 100, 100);
+    position: fixed;
+    top: 50px;
+    right: 30px;
+    border: 1px solid #999;
+    border-top: none;
+    color: #fff;
+    font-size: 13px;
+
+  }
+  .user div {
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+  }
+  .user div:hover {
+    background-color: var(--color-tint);
+  }
+  .user .userleft {
+    border-top: 1px solid #999;
   }
 </style>

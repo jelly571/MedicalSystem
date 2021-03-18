@@ -14,7 +14,7 @@
           <option value="Unet">Multi-transform</option>
         </select>
         <button @click='preClick' class='prebtn'>预测</button>
-        <pop-up :isShow='isPopShow' @yesClick='yesClick' @noClick='noClick'></pop-up>
+        <pop-up :isShow='isPopShow' :message='message' @yesClick='yesClick' @noClick='noClick'></pop-up>
       </div>
       <div class="diagnosisresult">
         <div class="result-bar">查看结果</div>
@@ -53,6 +53,7 @@ export default {
       flagpre: false,
       isPopShow: false,
       isPre: false,
+      message: '重新预测会删除原有预测结果，是否继续？'
     }
   },
   methods: {
@@ -83,9 +84,12 @@ export default {
         //传给后端服务器
         
         //传入服务器保存
-        
-        let result =res.result.replace(/data:image\/png;base64,/ig, '')
-        this.$axios.post('http://10.102.32.67:5000/diagnosis',{urlpro: result,patientid: sessionStorage.getItem('patientid')}).then(res => {
+    
+        let result = res.result.split(',')[1]
+        this.$axios.post('http://10.102.32.67:5000/diagnosis',{
+          urlpro: result,
+          patientid: sessionStorage.getItem('patientid'),
+          nowDate: this.$store.state.nowDate}).then(res => {
           this.titleImg.imgUrl = 'data:;base64,' + res.data
           this.flagpre = true
         })
@@ -103,8 +107,12 @@ export default {
       produce.disabled=true;
       produce.style.backgroundColor = '#999'
       prebtn.style.backgroundColor = '#999'
-      prebtn.innerHTML = '预测中'
-      this.$axios.post('http://10.102.32.67:5000/diagnosis',{urlpro:'',patientid: sessionStorage.getItem('patientid')}).then(res => {
+      prebtn.innerHTML = '预测中...'
+      this.$axios.post('http://10.102.32.67:5000/diagnosis',{
+        urlpro:'',
+        patientid: sessionStorage.getItem('patientid'),
+        nowDate: this.$store.state.nowDate}).then(res => {
+          this.$store.commit('changeSavedisabled', false)
           this.titleImg.imgPreUrl = 'data:;base64,' + res.data.img
           this.pretext = res.data.text
           prebtn.disabled=false;

@@ -1,10 +1,9 @@
 <template>
-  <div>
-    <div v-for="(item, index) in historyinfo" :key="index">
-      <date-bar @deleteClick="deleteClick()"><div>{{item.date}}</div></date-bar>
+  <div v-if='Object.keys(history).length !==0'>
+      <date-bar @deleteClick="deleteClick()"><div>{{history.date}}</div></date-bar>
       <div class="diagnosiscontent">
         <div class="uploadimg">
-          <div class="imagearea"><img :src="'data:;base64,' + item.imgpro" alt="" /></div>
+          <div class="imagearea"><img :src="'data:;base64,' + history.imgpro" alt="" /></div>
         </div>
         <div class="predict">
           <div class="select">
@@ -14,10 +13,10 @@
             <div class="result-bar">预测结果</div>
             <div class="result">
               <div class="result-img">
-                <img :src="'data:;base64,' + item.imgpre" alt="" />
+                <img :src="'data:;base64,' + history.imgpre" alt="" />
               </div>
               <div class="results">
-                <div class="result-text">预测结果：{{ item.text }}</div>
+                <div class="result-text">预测结果：{{ history.text }}</div>
                 <div class="download">
                   一键生成辅助诊疗报告：<button>生成</button>
                 </div>
@@ -26,7 +25,6 @@
           </div>
         </div>
       </div>
-    </div>
   </div>
 </template>
   
@@ -34,24 +32,21 @@
 import DateBar from "./DateBar";
 export default {
   name: "DiagnosisHistory",
+  props:{
+    history: {
+      type: Object,
+      default: {}
+    }
+  },
   components: {
     DateBar,
   },
-  data() {
-    return {
-      historyinfo: [],
-    };
+  
+  methods: {
+    deleteClick() {
+      this.$emit('deleteClick')
+    }
   },
-  created() {
-    this.$axios.post("http://10.102.32.67:5000/diagnosishistory",{patientid: this.$store.state.patientid}).then((res) => {
-      // this.titleImg.imgUrl ='data:;base64,'+  res.data.imgpro
-      // this.titleImg.imgPreUrl = 'data:;base64,' + res.data.imgpre
-      // this.pretext = res.data.text
-      if(res.data == '') return;
-      this.historyinfo = res.data
-    });
-  },
-  methods: {},
 };
 </script>
   
