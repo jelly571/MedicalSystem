@@ -48,10 +48,12 @@ export default {
   },
   methods:{
     getPatientDetail() {
+ 
       this.$axios
         .post("http://10.102.32.67:5000/patientdata", {patientid: sessionStorage.getItem('patientid')})
         .then((res) => { 
           this.datainfo = res.data
+         
         });
   
     },

@@ -43,14 +43,19 @@
     created() {
       this.getPatientDetail()
     },
+    updated() {
+      this.datainfo = this.$store.state.datainfo
+    },
     methods: {
       getPatientDetail() {
       this.$axios
         .post("http://10.102.32.67:5000/patientdata", {patientid: sessionStorage.getItem('patientid')})
         .then((res) => { 
-          this.datainfo = res.data
+          
+           this.$store.commit('changeDatainfo', res.data)
+           this.datainfo = res.data
         });
-  
+      
     },
       infoClick() {
         this.$router.replace('/patientdata').catch(err=>err)

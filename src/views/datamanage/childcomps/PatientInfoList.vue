@@ -40,7 +40,7 @@
       </div>
       <div class="right-bar">
         <button>导出数据</button>
-        <button>新建档案</button>
+        <button @click='newClick'>新建档案</button>
       </div>
     </div>
 
@@ -99,10 +99,15 @@ export default {
     this.getPatientData();
   },
   methods: {
+    newClick() {
+      this.$router.push('/patientnew').catch(err=>err)
+      
+    },
     getPatientData() {
       this.$axios
         .post("http://10.102.32.67:5000/patientdata", { page: this.page })
         .then((res) => {
+
           this.total = res.data.total
           this.datalist = res.data.datalist;
         });

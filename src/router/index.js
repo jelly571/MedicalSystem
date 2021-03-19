@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 const Login = ()=> import ('views/login/Login');
+const Register = ()=> import ('views/login/Register');
 const Home = ()=> import ('views/home/Home');
 const HomeInfo = ()=> import('views/home/childcomps/HomeInfo')
 const AccountManage = ()=> import('views/accountmanage/AccountManage')
@@ -10,6 +11,7 @@ const PatientData = ()=> import('views/datamanage/childcomps/PatientData')
 const PatientDataMan = ()=> import('views/datamanage/childcomps/PatientDataMan')
 const Diagnosis = ()=> import('views/diagnosis/Diagnosis')
 const PatientSystem = ()=> import('views/datamanage/childcomps/PatientSystem')
+const PatientNew = ()=> import('views/datamanage/childcomps/PatientNew')
 const Project = ()=> import('views/project/Project')
 Vue.use(VueRouter);
 
@@ -22,6 +24,10 @@ export default new VueRouter({
     {
       path: '/login',
       component: Login,
+    },
+    {
+      path: '/register',
+      component: Register,
     },
     {
       path: '/home',
@@ -46,6 +52,10 @@ export default new VueRouter({
         {
           path: '/datamanage',
           component: DataManage,
+        },
+        {
+          path: '/patientnew',
+          component: PatientNew
         },
         {
           path: '/patientsystem',

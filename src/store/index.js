@@ -10,6 +10,7 @@ const store = new Vuex.Store({
     patientid: sessionStorage.getItem('patientid') ? sessionStorage.getItem('patientid') : '0000',
     nowDate: '',
     savedisabled: true,
+    datainfo: {}
   },
 
   mutations: {
@@ -29,6 +30,9 @@ const store = new Vuex.Store({
     },
     changeSavedisabled(state,save) {
       state.savedisabled = save
+    },
+    changeDatainfo(state,value){
+      state.datainfo = value
     }
   },
 

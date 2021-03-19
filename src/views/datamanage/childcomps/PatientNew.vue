@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="info-bar">
-      <div><span> 数据管理 / </span>基本信息</div>
+      <div><span> 数据管理 / </span>新建档案</div>
       <div>
         <button @click='backClick'>返回</button>
         <button @click='saveClick'>保存</button>
@@ -10,7 +10,8 @@
     <div class='info-content'>
       <div class='title'><span></span>个人信息</div>
       <div class='info'>
-        <div class='info-item'>病例编号：<input  type="text" v-model='data.id' name='id' ></div>
+        <div class='info-item'>病例编号：<input  type="text" v-model='data.id' name='id' placeholder="单行输入"></div>
+        <div class='info-item'>负责医师：<input type="text" v-model='data.doctor' name='doctor' placeholder="单行输入"></div>
         <div class='info-item'>姓名：<input type="text" v-model='data.name' name='name' placeholder="单行输入"></div>
         <div class='info-item'>年龄：<input type="text" v-model='data.age' name='age' placeholder="单行输入"></div>
         <div class='info-item'>性别：
@@ -50,20 +51,21 @@
 <script>
 
 export default {
-  name: "PatientDataMan",
+  name: "PatientNew",
   data() {
     return {
       data: {
-        id: this.$store.state.datainfo.id,
-        name:this.$store.state.datainfo.name,
-        age:this.$store.state.datainfo.age,
-        sex: this.$store.state.datainfo.sex,
-        number: this.$store.state.datainfo.number,
-        state: this.$store.state.datainfo.state,
-        date: this.$store.state.datainfo.date,
-        ill:this.$store.state.datainfo.ill,
-        illinfo:this.$store.state.datainfo.illinfo,
-        illresult:this.$store.state.datainfo.illresult,
+        id: '',
+        name:'',
+        doctor:'',
+        age: null,
+        sex: '',
+        number: '',
+        state: '',
+        date: '',
+        ill:'',
+        illinfo:'',
+        illresult:'',
       }
 
     }
@@ -71,15 +73,13 @@ export default {
 
   methods: {
     backClick() {
-      this.$router.replace('/patientdata').catch(err=>err)
+      this.$router.replace('/datamanage').catch(err=>err)
    
     },
     saveClick() {
-
-      this.$axios.post('http://10.102.32.67:5000/patientdatasave',{data:this.data}).then(res => {
-        if(res.data === '修改成功') {
-          this.$store.commit('changeDatainfo',this.data)
-          this.$router.replace('/patientsystem').catch(err=>err)
+      this.$axios.post('http://10.102.32.67:5000/patientdatanew',{data:this.data}).then(res => {
+        if(res.data === '新增成功'){
+          this.$router.replace('/datamanage').catch(err=>err)
         }else {
           alert(res.data)
         }

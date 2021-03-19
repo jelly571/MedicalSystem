@@ -3,7 +3,7 @@
   <div class='nav'>
     <div class='left'>
       <img src="~assets/img/home/logo.png" alt="">
-      <div class='system' @click='homeClick'>胃窥镜图像疾病分割系统</div>
+      <div class='system' @click='homeClick'>胃肠道疾病辅助诊疗系统</div>
     </div>
     <div class='center'>
       <div class='title' v-for='(item,index) in title' :key='index'  :class='{active: $store.state.homecurrentindex === index}' @click='navClick(index)'>

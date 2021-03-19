@@ -1,85 +1,89 @@
 <template>
-  <div id="login">
-    <div class="hi">Hi，欢迎登录</div>
+  <div id="register">
+    <div class="hi">Hi，欢迎注册</div>
     <div class="title">胃肠道疾病辅助诊疗系统</div>
     <div class="user">
       <div class="input">
-        <div>账号</div>
+        <div>请输入6-20位账号</div>
         <input
           type="text"
           class="username"
           name="username"
           v-model="username"
-          placeholder="请输入用户名、手机或邮箱"
+          placeholder=""
         />
-        <div>密码</div>
+        <div>请输入6-20位密码</div>
         <input
           type="password"
           class="password"
           name="password"
           v-model="password"
           value=""
-          placeholder="请输入密码"
+          placeholder=""
         />
-        <div>
-          <a href="#" class="forget">忘记密码？</a>
-          <div class="register"  @click='Register'>注册</div>
-        </div>
+        <div>请再次输入密码</div>
+        <input
+          type="password"
+          class="password"
+          name="password"
+          v-model="passwordagain"
+          value=""
+          placeholder=""
+        />
       </div>
     </div>
     <div class="error-info">{{ this.error }}</div>
-    <button class="login-btn" @click="loginClick">登录</button>
-    
+    <button class="login-btn" @click="registerClick">注册</button>
   </div>
 </template>
   
 <script>
 export default {
-  name: "Login",
+  name: "Register",
   data() {
     return {
       username: "",
       password: "",
       error: "",
       msg: "",
-
+      passwordagain: "",
     };
   },
- 
   methods: {
-    Register(){
-      this.$router.push('/register').catch(err=>err)
-
-    },
-    loginClick() {
-      if (this.username.length === 0 && this.password.length === 0) {
+    registerClick() {
+      if (
+        this.username.length === 0 &&
+        this.password.length === 0 &&
+        this.passwordagain.length === 0
+      ) {
         this.error = "请输入账号和密码";
       } else if (this.username.length < 6 || this.username.length > 20) {
         this.error = "账号请输入6-20位字符";
       } else if (this.password.length < 6 || this.password.length > 20) {
         this.error = "密码请输入6-20位字符";
+      } else if (this.password !== this.passwordagain) {
+        this.error = "两次密码不一致，请重新输入";
       } else {
         this.error = "";
 
         this.getMessage();
-        
       }
     },
-
     getMessage() {
-      const path = "http://10.102.32.67:5000/login";
-      this.$axios.post(path, {
-        username: this.username,
-        password: this.password,
-    }).then((res) => {
-        if(res.data.token && res.data.token == this.username) {
-          this.$store.commit('changeLogin',res.data.token)
-          this.$router.replace("/home").catch((err) => err);
-        } else {
-          this.error = '账号或密码错误，请重新输入'
-        }
-        }).catch((error) => {
-          console.log(error)
+      const path = "http://10.102.32.67:5000/register";
+      this.$axios
+        .post(path, {
+          username: this.username,
+          password: this.password,
+        })
+        .then((res) => {
+          if(res.data === '注册成功')
+              this.$router.replace("/login").catch((err) => err);
+          
+          this.error = res.data
+        })
+        .catch((error) => {
+          console.log(error);
         });
     },
   },
@@ -87,12 +91,12 @@ export default {
 </script>
   
 <style scoped>
-#login {
+#register {
   width: 350px;
-  height: 350px;
+  height: 500px;
   position: relative;
   margin: auto;
-  margin-top: 12%;
+  margin-top: 8%;
   font-size: 14px;
   background-color: #fff;
 }
@@ -106,14 +110,15 @@ export default {
 
 .user {
   width: 350px;
-  height: 220px;
+  height: 300px;
+
   box-shadow: 0 0 5px #999;
   margin: 20px 0 10px;
   position: relative;
 }
 .user .input {
   width: 280px;
-  height: 200px;
+  height: 250px;
   position: absolute;
   margin: auto;
   top: 0;

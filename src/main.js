@@ -9,7 +9,7 @@ import axios from 'axios'
 Vue.prototype.$axios = axios;
 // 路由导航守卫
 router.beforeEach((to, from, next) => {
-  if (to.path === '/login') {
+  if (to.path === '/login' || to.path === '/register') {
     next();
   } else {
     let token = sessionStorage.getItem('token');
